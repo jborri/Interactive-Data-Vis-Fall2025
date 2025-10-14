@@ -9,7 +9,7 @@ This page is where you can iterate. Follow the lab instructions in the [readme.m
 # *☆～（ゝ。∂）Welcome ♡( •ॢ◡-ॢ)✧˖° ♡*
 ## to Joe's Lab 0
 
-![Drawing](https://s3.amazonaws.com/files.commons.gc.cuny.edu/wp-content/blogs.dir/32576/files/2025/10/drawing.png)
+![quick sketch for next painting](https://s3.amazonaws.com/files.commons.gc.cuny.edu/wp-content/blogs.dir/32576/files/2025/10/drawing.png "quick sketch")
 
 ```js
 const subjectInput = html`<input type="text" placeholder="Choose Wisely">`;
