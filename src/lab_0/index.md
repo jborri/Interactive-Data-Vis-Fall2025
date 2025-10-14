@@ -5,4 +5,18 @@ toc: true
 
 This page is where you can iterate. Follow the lab instructions in the [readme.md](./README.md).
 
-*hi*
+
+# *☆～（ゝ。∂）Welcome ♡( •ॢ◡-ॢ)✧˖° ♡*
+## to Joe's Lab 0
+
+![Drawing](https://s3.amazonaws.com/files.commons.gc.cuny.edu/wp-content/blogs.dir/32576/files/2025/10/drawing.png)
+
+```js
+const subjectInput = html`<input type="text" placeholder="Choose Wisely">`;
+const subject = Generators.input(subjectInput);
+```
+
+<div class="card" style="display: grid; gap: 0.5rem;">
+  <div>Enter Emotion: ${subjectInput}</div>
+  <div>Today will be a <b>${subject || "unknown"}</b> day!</div>
+</div>
