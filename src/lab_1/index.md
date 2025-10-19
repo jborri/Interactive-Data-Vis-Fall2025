@@ -93,3 +93,9 @@ Plot.plot({
   ]
 })
 ```
+```js
+const xvariable = view(Inputs.select(
+  ["temperature", "humidity", "wind_speed", "weather_condition"],
+  {label: "x-axis", value: "humidity"}
+));
+```
