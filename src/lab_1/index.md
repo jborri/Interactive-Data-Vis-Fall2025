@@ -4,7 +4,7 @@ toc: true
 theme: [deep-space]
 
 ---
-# Lab 1: Passing Pollinators
+# Lab 1: Prolific Pollinators
 ## Joseph Borri
 
 
