@@ -1,5 +1,5 @@
 ---
-title: "Lab 1: Passing Pollinators"
+title: "Lab 1: Prolific Pollinators"
 toc: true
 theme: [deep-space]
 
@@ -65,11 +65,11 @@ Plot.plot({
   grid: true,
   marginRight: 60,
   facet: {label: null},
-      x: {ticks: d3.range(0, 30, 5),
-        domain: [0, 30]
+      x: {ticks: d3.range(0, 10, 2),
+        domain: [0, 10]
         },
-    y: {ticks: d3.range(0, 100, 10),
-        domain: [0, 100],
+    y: {ticks: d3.range(0, 30, 2),
+        domain: [0, 30],
     },  
     color: {legend: true}, 
   marks: [
