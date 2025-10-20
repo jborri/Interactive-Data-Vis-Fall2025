@@ -106,8 +106,9 @@ Plot.plot({
   y: {label: null},
   color: {legend: true},
   marks: [
-    Plot.barX(pollinators, {y: "nectar_production", x: 1, inset: 0.5, fill: "flower_species", sort: "visit_count",tip: true,}),
+    Plot.barX(pollinators, {y: "nectar_production", x: 1, inset: 0.5, fill: "flower_species", sort: "visit_count",tip: true,sort: { y: "y", reverse: false, },}),
     Plot.ruleX([0]),
+    
     
   ]
 })
