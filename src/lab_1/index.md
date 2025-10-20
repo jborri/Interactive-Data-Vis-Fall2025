@@ -1,7 +1,7 @@
 ---
 title: "Lab 1: Prolific Pollinators"
 toc: true
-theme: [deep-space]
+theme: [coffee]
 
 ---
 # Lab 1: Prolific Pollinators
