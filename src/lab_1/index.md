@@ -93,11 +93,11 @@ Plot.plot({
 ```
 ```js
 const xvariable = view(Inputs.select(
-  ["temperature", "humidity", "wind_speed", "weather_condition"],
+  ["temperature", "humidity", "wind_speed", "observation_hour"],
   {label: "y-axis", value: "temperature"}
 ));
 ```
-Looks like bees will work regardless of whether or not the sun is out. They do however like warmer temperatures, low wind speeds, and high humidity.
+Looks like bees will work regardless of whether or not the sun is out. They do however like warmer temperatures, low wind speeds, and high humidity. They also seem to be diurnal?
 # 3. Which flower has the most nectar production?
 ```js
 Plot.plot({
