@@ -68,8 +68,8 @@ Plot.plot({
       x: {ticks: d3.range(0, 30, 5),
         domain: [0, 30]
         },
-    y: {ticks: d3.range(10, 40, 5),
-        domain: [10, 40],
+    y: {ticks: d3.range(0, 100, 10),
+        domain: [0, 100],
     },  
     color: {legend: true}, 
   marks: [
@@ -77,10 +77,10 @@ Plot.plot({
     Plot.ruleX([0]),
     Plot.dot(pollinators, {
       x: "visit_count",
-      y: "temperature",
+      y: xvariable,
       fx: "flower_species",
       fy: "weather_condition",
-      stroke: "pollinator_species",
+      stroke: "location",
       sort: { x: "x", reverse: false, reduce: "median", order: "descending" },
       sort: { y: "y", reverse: true, order: "ascending" },
       tip: true,
