@@ -97,7 +97,7 @@ const xvariable = view(Inputs.select(
   {label: "y-axis", value: "temperature"}
 ));
 ```
-Looks like bees will work regardless of whether or not the sun is out. They do however like warmer temperatures.
+Looks like bees will work regardless of whether or not the sun is out. They do however like warmer temperatures, low wind speeds, and high humidity.
 # 3. Which flower has the most nectar production?
 ```js
 Plot.plot({
