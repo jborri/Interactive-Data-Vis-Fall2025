@@ -4,8 +4,8 @@ toc: true
 theme: [coffee]
 
 ---
-# Lab 1: Prolific Pollinators
-## Joseph Borri
+# ⋅.˳˳.εწз ⊹♡Prolific Pollinators♡⊹ εწз˳˳.⋅
+## Joseph Borri, Lab 1: Interactive Data Visualization, Fall 2025
 
 
 # Dataset
@@ -113,6 +113,7 @@ Looks like bees will work regardless of whether or not the sun is out. They do h
 # 3. Which flower has the most nectar production?
 ```js
 Plot.plot({
+  height: 500,
   marginLeft: 60,
   x: {label: "Frequency →"},
   y: {label: null},
