@@ -66,21 +66,21 @@ Plot.plot({
   grid: true,
   marginRight: 60,
   facet: {label: null},
-      x: {ticks: d3.range(0, 30, 2),
+      y: {ticks: d3.range(0, 30, 2),
         domain: [0, 30]
         },
-    y: {ticks: d3.range(0, 100, 10),
-        domain: [0, 100],
+    x: {ticks: d3.range(0, range, 10),
+        domain: [0, range],
     },  
     color: {legend: true}, 
   marks: [
     Plot.frame(),
     Plot.ruleX([0]),
     Plot.dot(pollinators, {
-      x: "visit_count", 
-      y: xvariable,
+      x: xvariable,
+      y: "visit_count",
       // fx: "flower_species",
-      fy: "location",
+      fx: "location",
       stroke: "weather_condition",
       sort: { x: "x", reverse: false, reduce: "median", order: "descending" },
       sort: { y: "y", reverse: true, order: "ascending" },
@@ -96,6 +96,12 @@ Plot.plot({
 const xvariable = view(Inputs.select(
   ["temperature", "humidity", "wind_speed", "observation_hour"],
   {label: "y-axis", value: "temperature"}
+));
+```
+```js
+const range = view(Inputs.range(
+  [30, 100], {value: 100, step: 5, label: "Granularity"},
+  {label: "x-axis range", value: "100"}
 ));
 ```
 
