@@ -125,7 +125,7 @@ Plot.plot({
   ]
 })
 ```
-Sunflower yields the most nectar production, followed by coneflower and lavendar. They appear to have relatively similar distributions with respect to their nectar production. There is a slight overlap between coneflower and lavender, but sunflower is clearly the leader.
+Sunflower yields the most nectar production, followed by coneflower and lavender. They appear to have relatively similar distributions with respect to their nectar production. There is a slight overlap between coneflower and lavender, but sunflower is clearly the leader.
 <!-- ```js
 Plot.plot({
   r: {range: [0, 6]}, // generate slightly smaller dots
