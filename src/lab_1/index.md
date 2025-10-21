@@ -24,6 +24,7 @@ const body_mass = "avg_body_mass_g"
 const wingspan = "avg_wing_span_mm"
 const time_of_day = "observation_hour"
 const visits = "visit_count"
+const temp = ("temperature" * (9/5) + 32)
 // (x-axis variable will be chosen later in the weather section)
 
 ```
@@ -68,19 +69,19 @@ Plot.plot({
       x: {ticks: d3.range(0, 30, 2),
         domain: [0, 30]
         },
-    y: {ticks: d3.range(0, 90, 10),
-        domain: [0, 90],
+    y: {ticks: d3.range(0, 100, 10),
+        domain: [0, 100],
     },  
     color: {legend: true}, 
   marks: [
     Plot.frame(),
     Plot.ruleX([0]),
     Plot.dot(pollinators, {
-      x: "visit_count",
+      x: "visit_count", 
       y: xvariable,
       // fx: "flower_species",
-      fy: "weather_condition",
-      stroke: "location",
+      fy: "location",
+      stroke: "weather_condition",
       sort: { x: "x", reverse: false, reduce: "median", order: "descending" },
       sort: { y: "y", reverse: true, order: "ascending" },
       tip: true,
@@ -97,7 +98,18 @@ const xvariable = view(Inputs.select(
   {label: "y-axis", value: "temperature"}
 ));
 ```
-Looks like bees will work regardless of whether or not the sun is out. They do however like warmer temperatures, low wind speeds, and high humidity. They also seem to be diurnal?
+
+<!-- trying to convert to fahrenheit -->
+```js
+const dataF = pollinators.map(d => ({
+  ...d,
+  tempF: d.temperature * 9/5 + 32
+}));
+
+```
+
+
+Looks like bees will work regardless of whether or not the sun is out. They do however like warmer temperatures, low wind speeds, and average (~65-80%) humidity. They also seem to be diurnal?
 # 3. Which flower has the most nectar production?
 ```js
 Plot.plot({
@@ -113,6 +125,7 @@ Plot.plot({
   ]
 })
 ```
+Sunflower yields the most nectar production, followed by coneflower and lavendar. They appear to have relatively similar distributions with respect to their nectar production. There is a slight overlap between coneflower and lavender, but sunflower is clearly the leader.
 <!-- ```js
 Plot.plot({
   r: {range: [0, 6]}, // generate slightly smaller dots
