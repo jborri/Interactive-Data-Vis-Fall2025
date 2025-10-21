@@ -80,7 +80,7 @@ Plot.plot({
       x: xvariable,
       y: "visit_count",
       // fx: "flower_species",
-      fx: "location",
+      fy: "location",
       stroke: "weather_condition",
       sort: { x: "x", reverse: false, reduce: "median", order: "descending" },
       sort: { y: "y", reverse: true, order: "ascending" },
