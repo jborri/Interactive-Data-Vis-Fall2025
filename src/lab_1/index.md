@@ -48,7 +48,7 @@ Plot.plot({
             y: wingspan,
             tip: true,
             stroke: "pollinator_species", strokeOpacity: 0.6,
-            sort: {y: "-x", y: "-x", },  
+            sort: { y: "-x", },  
             }),
             ]
 })
@@ -65,11 +65,11 @@ Plot.plot({
   grid: true,
   marginRight: 60,
   facet: {label: null},
-      x: {ticks: d3.range(0, 10, 2),
-        domain: [0, 10]
+      x: {ticks: d3.range(0, 30, 2),
+        domain: [0, 30]
         },
-    y: {ticks: d3.range(0, 30, 2),
-        domain: [0, 30],
+    y: {ticks: d3.range(0, 90, 10),
+        domain: [0, 90],
     },  
     color: {legend: true}, 
   marks: [
@@ -78,7 +78,7 @@ Plot.plot({
     Plot.dot(pollinators, {
       x: "visit_count",
       y: xvariable,
-      fx: "flower_species",
+      // fx: "flower_species",
       fy: "weather_condition",
       stroke: "location",
       sort: { x: "x", reverse: false, reduce: "median", order: "descending" },
