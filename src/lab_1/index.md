@@ -25,7 +25,6 @@ const wingspan = "avg_wing_span_mm"
 const time_of_day = "observation_hour"
 const visits = "visit_count"
 const temp = ("temperature" * (9/5) + 32)
-// (x-axis variable will be chosen later in the weather section)
 
 ```
 
@@ -69,12 +68,12 @@ Plot.plot({
   marginRight: 60,
   facet: {label: null},
       y: {ticks: d3.range(0, 30, 2),
-        domain: [0, 30],
-        label: "Number of Visits"
-        },
-    x: {ticks: d3.range(0, range, 10),
-        domain: [0, range],
-    },  
+          domain: [0, 30],
+          label: "Number of Visits"
+         },
+      x: {ticks: d3.range(0, range, 10),
+          domain: [0, range],
+         },  
     color: {legend: true}, 
     title: "Pollinator Visits vs. Weather Conditions per Plot Location",
   marks: [
@@ -126,7 +125,7 @@ Plot.plot({
   height: 500,
   marginLeft: 60,
   x: {label: "Frequency →"},
-  y: {label: null, label: "Nectar Production (µg)",
+  y: {label: "Nectar Production (µg)",
       reverse: true,
       type: "band",
       // ticks: d3.range(0, 4, 0.1),
@@ -138,7 +137,8 @@ Plot.plot({
   marks: [
     Plot.barX(pollinators, {
       y: "nectar_production", 
-      x: 1, inset: 0.5, 
+      x: 1,
+      inset: 0.5, 
       fill: "flower_species", 
       sort: "visit_count",
       tip: true,sort: 
