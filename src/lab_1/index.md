@@ -4,11 +4,11 @@ toc: true
 theme: [coffee]
 
 ---
-# ⋅.˳˳.εწз ⊹♡Prolific Pollinators♡⊹ εწз˳˳.⋅
+# ⋅.˳˳.εწз ⊹♡Prolific Pollinators♡⊹ εწз.˳˳.⋅
 ## Joseph Borri, Lab 1: Interactive Data Visualization, Fall 2025
 
 
-# Dataset
+# Dataset used:
 
 
 ```js
@@ -34,13 +34,15 @@ Plot.plot({
     // width: 700,
     // height: 400,
     x: {ticks: d3.range(0, 0.6, 0.1),
-        domain: [0, 0.55]
+        domain: [0, 0.55],
+        label: "Body Mass (g)",
         },
     y: {ticks: d3.range(10, 60, 5),
         domain: [10, 60],
+        label: "Wingspan (mm)",
     },   
     title: "Mass/Wingspan Ratio Among Pollinating Species",
-    // subtitle: "See which species has the largest ratio",
+    
     color: {legend: true},
     marks: [
         Plot.frame(),
@@ -67,12 +69,14 @@ Plot.plot({
   marginRight: 60,
   facet: {label: null},
       y: {ticks: d3.range(0, 30, 2),
-        domain: [0, 30]
+        domain: [0, 30],
+        label: "Number of Visits"
         },
     x: {ticks: d3.range(0, range, 10),
         domain: [0, range],
     },  
     color: {legend: true}, 
+    title: "Pollinator Visits vs. Weather Conditions per Plot Location",
   marks: [
     Plot.frame(),
     Plot.ruleX([0]),
@@ -95,12 +99,12 @@ Plot.plot({
 ```js
 const xvariable = view(Inputs.select(
   ["temperature", "humidity", "wind_speed", "observation_hour"],
-  {label: "y-axis", value: "temperature"}
+  {label: "x-axis", value: "temperature"}
 ));
 ```
 ```js
 const range = view(Inputs.range(
-  [30, 100], {value: 100, step: 5, label: "Granularity"},
+  [30, 100], {value: 100, step: 5, label: "x-axis scale max"},
   {label: "x-axis range", value: "100"}
 ));
 ```
@@ -122,10 +126,23 @@ Plot.plot({
   height: 500,
   marginLeft: 60,
   x: {label: "Frequency →"},
-  y: {label: null},
+  y: {label: null, label: "Nectar Production (µg)",
+      reverse: true,
+      type: "band",
+      // ticks: d3.range(0, 4, 0.1),
+      // domain: [0, 0.10]
+  },
   color: {legend: true},
+  title: "Nectar Production by Flower Species",
+  subtitle: "Sorted by Visit Count",
   marks: [
-    Plot.barX(pollinators, {y: "nectar_production", x: 1, inset: 0.5, fill: "flower_species", sort: "visit_count",tip: true,sort: { y: "y", reverse: false, },}),
+    Plot.barX(pollinators, {
+      y: "nectar_production", 
+      x: 1, inset: 0.5, 
+      fill: "flower_species", 
+      sort: "visit_count",
+      tip: true,sort: 
+      { y: "y", reverse: true, type: "band"},}),
     Plot.ruleX([0]),
     
     
