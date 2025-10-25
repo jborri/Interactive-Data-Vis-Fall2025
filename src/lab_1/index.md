@@ -12,7 +12,6 @@ theme: [coffee]
 
 
 ```js
-// view(aapl)
 Inputs.table(pollinators)
 ```
 
@@ -25,13 +24,10 @@ const wingspan = "avg_wing_span_mm"
 const time_of_day = "observation_hour"
 const visits = "visit_count"
 const temp = ("temperature" * (9/5) + 32)
-
 ```
 
 ```js
 Plot.plot({
-    // width: 700,
-    // height: 400,
     x: {ticks: d3.range(0, 0.6, 0.1),
         domain: [0, 0.55],
         label: "Body Mass (g)",
@@ -46,10 +42,13 @@ Plot.plot({
     marks: [
         Plot.frame(),
         Plot.density(pollinators, { 
-            x: body_mass, fill:"pollinator_species", fillOpacity: 0.4,
+            x: body_mass,
+            fill:"pollinator_species",
+            fillOpacity: 0.4,
             y: wingspan,
             tip: true,
-            stroke: "pollinator_species", strokeOpacity: 0.6,
+            stroke: "pollinator_species",
+            strokeOpacity: 0.6,
             sort: { y: "-x", },  
             }),
             ]
@@ -78,33 +77,26 @@ Plot.plot({
     title: "Pollinator Visits vs. Weather Conditions per Plot Location",
   marks: [
     Plot.frame(),
-    Plot.ruleX([0]),
     Plot.dot(pollinators, {
       x: xvariable,
       y: "visit_count",
-      // fx: "flower_species",
       fy: "location",
       stroke: "weather_condition",
-      sort: { x: "x", reverse: false, reduce: "median", order: "descending" },
-      sort: { y: "y", reverse: true, order: "ascending" },
       tip: true,
-      
-      
-      
-    })
+       }), 
   ]
 })
 ```
 ```js
 const xvariable = view(Inputs.select(
-  ["temperature", "humidity", "wind_speed", "observation_hour"],
-  {label: "x-axis", value: "temperature"}
+  ["humidity", "temperature", "wind_speed", "observation_hour"],
+  {label: "x-axis", value: "humidity"}
 ));
 ```
 ```js
 const range = view(Inputs.range(
   [30, 100], {value: 100, step: 5, label: "x-axis scale max"},
-  {label: "x-axis range", value: "100"}
+  {value: "100"}
 ));
 ```
 
@@ -141,11 +133,9 @@ Plot.plot({
       inset: 0.5, 
       fill: "flower_species", 
       sort: "visit_count",
-      tip: true,sort: 
-      { y: "y", reverse: true, type: "band"},}),
+      tip: true,
+      sort: { y: "y", reverse: true, type: "band"},}),
     Plot.ruleX([0]),
-    
-    
   ]
 })
 ```
