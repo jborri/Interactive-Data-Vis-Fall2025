@@ -128,6 +128,63 @@ const ridershipTotals = Object.keys(totalRidershipByStation).map(function(statio
   };
 });
 
+// Calculate average response time per station for normalization
+const responseTimeByStation = {};
+incidents.forEach(function(incident) {
+  const stationName = incident.station;
+  if (!responseTimeByStation[stationName]) {
+    responseTimeByStation[stationName] = [];
+  }
+  responseTimeByStation[stationName].push(incident.response_time_minutes);
+});
+
+const avgResponseTimeByStation = {};
+Object.keys(responseTimeByStation).forEach(function(stationName) {
+  const times = responseTimeByStation[stationName];
+  const sum = times.reduce(function(acc, time) {
+    return acc + time;
+  }, 0);
+  avgResponseTimeByStation[stationName] = sum / times.length;
+});
+
+// Normalize both metrics to 0-1 scale so they can be compared on same axis
+// Step 1: Find min and max for ridership
+let minRidership = Infinity;
+let maxRidership = -Infinity;
+ridershipTotals.forEach(function(row) {
+  if (row.totalRidership < minRidership) minRidership = row.totalRidership;
+  if (row.totalRidership > maxRidership) maxRidership = row.totalRidership;
+});
+
+// Step 2: Find min and max for response time
+let minResponseTime = Infinity;
+let maxResponseTime = -Infinity;
+Object.keys(avgResponseTimeByStation).forEach(function(stationName) {
+  const time = avgResponseTimeByStation[stationName];
+  if (time < minResponseTime) minResponseTime = time;
+  if (time > maxResponseTime) maxResponseTime = time;
+});
+
+// Step 3: Create normalized data for plotting
+const normalizedComparisonData = ridershipTotals.map(function(row) {
+  // Normalize ridership to 0-1
+  const normalizedRidership = (row.totalRidership - minRidership) / (maxRidership - minRidership);
+  
+  // Get response time for this station and normalize to 0-1
+  const responseTime = avgResponseTimeByStation[row.station];
+  const normalizedResponseTime = responseTime 
+    ? (responseTime - minResponseTime) / (maxResponseTime - minResponseTime)
+    : null;
+  
+  return {
+    station: row.station,
+    totalRidership: row.totalRidership,
+    normalizedRidership: normalizedRidership,
+    avgResponseTime: responseTime,
+    normalizedResponseTime: normalizedResponseTime
+  };
+});
+
 ```
 
 
@@ -177,6 +234,38 @@ As you can see, ridership spikes around local events. There is a noticeable drop
 ```js
 Plot.plot({
   width: width,
+  x: {
+    label: "Normalized Value (0-1)",
+    domain: [0, 1]
+  },
+  marks: [
+    Plot.frame(),
+    // Bars showing normalized average response time per station
+    Plot.barX(normalizedComparisonData.filter(d => d.normalizedResponseTime !== null), {
+      x: (d) => d.normalizedResponseTime,
+      y: (d) => d.station,
+      fill: "gray",
+      fillOpacity: 0.7,
+      tip: true,
+      title: (d) => `${d.station}: ${d.avgResponseTime.toFixed(1)} min avg response time`
+    }),
+    // Dots showing normalized total ridership per station
+    Plot.dot(normalizedComparisonData, {
+      x: (d) => d.normalizedRidership,
+      y: (d) => d.station,
+      fill: "red",
+      size: 100,
+      tip: true,
+      title: (d) => `${d.station}: ${d.totalRidership.toLocaleString()} total riders`
+    })
+  ]
+  
+})
+```
+
+<!-- ```js
+Plot.plot({
+  width: width,
   
   marks: [
     Plot.frame(),
@@ -214,7 +303,7 @@ Plot.plot({
   ]
   
 })
-```
+``` -->
 
 
 As you can see, stations with higher traffic have lower response times. 86th, houston and 50th stations seem to be the best.
