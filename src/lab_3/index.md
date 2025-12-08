@@ -251,7 +251,7 @@ Before we begin to discuss areas in which the candidate and their team succeeded
  As you can see, there is a clear distinction between income and votes received. The candidate was highly favored by low-income residents. It also appears that the candidate lost the middle aged voters.
 
 # Policy
-## Let's begin by taking a look at how policy played a roll in the mayoral race
+## Next, let us take a look at how policy played a roll in the mayoral race
 
 ```js
 //removing nulls
@@ -320,52 +320,28 @@ Plot.plot({
     .map(d => html`<p><strong>Age ${d.age}, ${d.voted_for}:</strong> ${d.open_response}</p>`)}</div>
 </div>
 
-```js
-Plot.plot({
-  fx: {label: "Policy", tickRotate: -4},   
-  y: {label: "Average alignment", grid: true},
-  color: {type: "ordinal",
-    range: colors,
-    legend: true,},
-  marks: [
-    Plot.barY(
-      policyList,
-      Plot.groupX(
-        {y: "mean"},
-        {
-          fx: "policy",     
-          x: "voted_for",        
-          y: "alignment",
-          fy: "income_category",
-          fill: "income_category",
-          tip: true
-        }
-      )
-    ),
-    Plot.ruleY([0])
-  ]
-})
-```
-```js
-Plot.plot({
 
-  marks: [
-    Plot.rectY(survey, Plot.binX({y: "count"}, {x: "age", fill: "voted", tip: true})),
-    Plot.dot(survey, {
-      x: "age",
-      y: d => d.median_household_income,
-      r: 2,
-      // fill: "transparent",
-      // stroke: "transparent",
-      title: d => (d.open_response ? d.open_response.slice(0,200) : ""),
-      tip: true
-    })
-  ]
-})
+```js
+const turnoutByIncome = Array.from(
+  d3.group(policyList, d => d.income_category),
+  ([income_category, group]) => {
+    const total = group.length;
+    const candidateVotes = group.filter(d => d.voted_for === "Candidate").length;
+    return {
+      income_category,
+      turnout_pct: total > 0 ? (candidateVotes / total) * 100 : 0
+    };
+  }
+);
 ```
-<div style="max-height:200px;overflow:auto">
-  ${survey
-    .filter(d => d.open_response)
-    .slice(0,50) // limit shown
-    .map(d => html`<p><strong>Age ${d.age}, ${d.voted_for}:</strong> ${d.open_response}</p>`)}
-</div>
+
+
+
+
+
+# For the Next Campaign
+## Finally, based on the data presented above, here are some recommendations for the next campaign:
+- Focus on engaging middle-aged voters, as they showed lower support for the candidate.
+- Leverage the strong support from low-income communities by organizing more events in these areas.
+- Analyze open-ended feedback to identify specific issues that resonated with voters and incorporate these into future campaign strategies.
+- Consider targeted outreach efforts in districts with lower voter turnout to boost engagement.
