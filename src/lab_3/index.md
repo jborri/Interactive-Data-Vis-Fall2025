@@ -273,27 +273,18 @@ const policyAvg = policyKeys.map(k => ({
   policy: k,
   avg: d3.mean(survey, d => d[k])
 }));
-```
-```js
-const policyKeys = Object.keys(survey[0]).filter(k => k.endsWith("_alignment"));
+
+//array and removing nulls
 const policyList = survey.flatMap(d =>
   policyKeys.map(k => ({
     policy: k,
     alignment: d[k],
     voted_for: d.voted_for,
-    income_category: incomeByBoro.get(d.boro_cd)
+    income_category: incomeByBoro.get?.(d.boro_cd) ?? "unknown"
   }))
 ).filter(d => d.alignment != null && d.voted_for != null);
 ```
-```js
-const policies = [
-  { key: 'affordable_housing_alignment', label: 'Affordable Housing' },
-  { key: 'public_transit_alignment', label: 'Public Transit' },
-  { key: 'childcare_support_alignment', label: 'Childcare Support' },
-  { key: 'small_business_tax_alignment', label: 'Small Business Tax' },
-  { key: 'police_reform_alignment', label: 'Police Reform' }
-];
-```
+
 
 <div class="grid grid-cols-2">
 <div class="card grid-rowspan-1"><h2>Average Policy Alignment by Income Level</h2>${
@@ -344,3 +335,6 @@ const policyLabels = {
   police_reform_alignment: 'Police Reform'
 };
 ```
+
+
+
