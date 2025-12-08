@@ -21,7 +21,7 @@ Inputs.table(survey)
 ```
 ## Events
 ```js
-Inputs.table(survey)
+Inputs.table(events)
 ```
 <!-- Import Data -->
 ```js
@@ -42,7 +42,7 @@ const events = await FileAttachment("data/campaign_events.csv").csv({ typed: tru
 ```js
 // The nyc file is saved in data as a topoJSON instead of a geoJSON. Thats primarily for size reasons -- it saves us 3MB of data. For Plot to render it, we have to convert it back to its geoJSON feature collection. 
 const districts = topojson.feature(nyc, nyc.objects.districts)
-display(districts)
+// display(districts)
 ```
 
 ```js
@@ -69,7 +69,7 @@ const districtsWithData = districts.features.map(feature => {
   };
 });
 
-//creating a new feature collection with joined data
+//joining
 const districtsJoined = {
   ...districts,
   features: districtsWithData
@@ -77,7 +77,7 @@ const districtsJoined = {
 ```
 
 ```js
-//creating color scale for income categories for legend
+//color scale
 const incomeColors = {
   Low: "#B2D732",
   Middle: "#4424D6",
@@ -90,7 +90,16 @@ const voteTotals = [
   {name: "Candidate", votes: d3.sum(results, d => d.votes_candidate)},
   {name: "Opponent", votes: d3.sum(results, d => d.votes_opponent)}
 ];
+//making it a percentage
+const totalVotes = d3.sum(voteTotals, d => d.votes);
+voteTotals.forEach(d => {
+  d.percentage = +(d.votes / totalVotes * 100).toFixed(1);
+});
+
+
+const candidatePercentage = voteTotals.find(d => d.name === "Candidate")?.percentage ?? 0;
 ```
+
 
 <!-- ```js
 Plot.plot({
@@ -110,20 +119,24 @@ Plot.plot({
     Plot.geo(districtsJoined, {
       fill: d => d.properties.votes_candidate/1000,
       stroke: "black",
-      strokeWidth: 0.5
+      strokeWidth: 0.5,
     }),
     Plot.dot(districtsJoined, Plot.geoCentroid({
       r: d => d.properties.median_household_income/10000,
       fill: d => incomeColors[d.properties.income_category] ?? "#666",
-      tip: {
-      channels: { Income: "median_household_income", votes: "votes_candidate", category:"income_category" },
-          format: {
- 
-    }},
-    })), 
-  ]
+
+      title: (d) =>
+        `Votes: ${d.properties.votes_candidate} \nMedian Income: ${d.properties.median_household_income} \nIncome Category: ${d.properties.income_category} `,
+        tip: true,
+      
+    })),
+
+  ],
+  
+
 })
-```
+``` -->
+<!-- 
 ```js
     Plot.legend({
   color: {
@@ -183,8 +196,9 @@ Before we begin to discuss areas in which the candidate and their team succeeded
     Plot.dot(districtsJoined, Plot.geoCentroid({
       r: d => d.properties.median_household_income/10000,
       fill: d => incomeColors[d.properties.income_category] ?? "#666",
-      tip: true,
-      channels: { Income: "median_household_income", votes: "votes_candidate", category:"income_category" },
+            title: (d) =>
+        `Votes: ${d.properties.votes_candidate} \nMedian Income: ${d.properties.median_household_income} \nIncome Category: ${d.properties.income_category} `,
+        tip: true,
     })), 
   ]
 })} ${Plot.legend({
@@ -200,7 +214,9 @@ Before we begin to discuss areas in which the candidate and their team succeeded
   y: {label: "Total votes", grid: true},
   x: {label: " "},
   marks: [
-    Plot.barY(voteTotals, {x: "name", y: "votes", fill: "name", tip: true}),
+    Plot.barY(voteTotals, {x: "name", y: "votes", fill: "name",title: (d) =>
+      `Votes: ${d.votes}\nPercentage: ${d.percentage}%`,
+      tip: true,}),
     Plot.ruleY([0])
   ],
   color: {type: "ordinal",
@@ -258,7 +274,7 @@ const policies = [
 
 
 ```js
-//mapping income category by boro code
+//mapping income category by borough code
 const incomeByBoro = new Map(results.map(d => [d.boro_cd, d.income_category]));
 
 const policyKeys = Object.keys(survey[0]).filter(k => k.endsWith("_alignment"));
@@ -270,7 +286,7 @@ const policyAvg = policyKeys.map(k => ({
 ```
 ```js
 const policyKeys = Object.keys(survey[0]).filter(k => k.endsWith("_alignment"));
-const policyLong = survey.flatMap(d =>
+const policyList = survey.flatMap(d =>
   policyKeys.map(k => ({
     policy: k,
     alignment: d[k],
@@ -290,7 +306,7 @@ Plot.plot({
     legend: true,},
   marks: [
     Plot.barY(
-      policyLong,
+      policyList,
       Plot.groupX(
         {y: "mean"},
         {
