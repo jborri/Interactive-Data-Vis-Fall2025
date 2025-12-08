@@ -283,7 +283,7 @@ const policyLong = survey.flatMap(d =>
 
 <div class="card">${
 Plot.plot({
-  fx: {label: "Policy", tickRotate: -4},        // one column per policy
+  fx: {label: "Policy", tickRotate: -4},   
   y: {label: "Average alignment", grid: true},
   color: {type: "ordinal",
     range: colors,
@@ -294,8 +294,8 @@ Plot.plot({
       Plot.groupX(
         {y: "mean"},
         {
-          fx: "policy",          // facet
-          x: "voted_for",        // group within facet
+          fx: "policy",     
+          x: "voted_for",        
           y: "alignment",
           fy: "income_category",
           fill: "income_category",
