@@ -52,7 +52,7 @@ const incomeMap = new Map(results.map(r => [r.boro_cd, r.median_household_income
 const cateMap = new Map(results.map(r => [r.boro_cd, r.income_category]))
 
 
-// Join votes_candidate and median_household_income to each district feature
+//joining votes_candidate and median_household_income to each district feature
 const districtsWithData = districts.features.map(feature => {
   const boroCd = feature.properties.BoroCD;
   const votes = votingMap.get(boroCd);
@@ -69,18 +69,27 @@ const districtsWithData = districts.features.map(feature => {
   };
 });
 
-// Create a new feature collection with joined data
+//creating a new feature collection with joined data
 const districtsJoined = {
   ...districts,
   features: districtsWithData
 };
 ```
+
 ```js
+//creating color scale for income categories for legend
 const incomeColors = {
   Low: "#B2D732",
   Middle: "#4424D6",
   High: "#e285fb" 
 };
+```
+```js
+//summing total votes for candidate and opponent
+const voteTotals = [
+  {name: "Candidate", votes: d3.sum(results, d => d.votes_candidate)},
+  {name: "Opponent", votes: d3.sum(results, d => d.votes_opponent)}
+];
 ```
 
 <!-- ```js
@@ -178,7 +187,7 @@ Before we begin to discuss areas in which the candidate and their team succeeded
       channels: { Income: "median_household_income", votes: "votes_candidate", category:"income_category" },
     })), 
   ]
-})} ${    Plot.legend({
+})} ${Plot.legend({
   color: {
     type: "ordinal",
     domain: Object.keys(incomeColors),
@@ -249,8 +258,9 @@ const policies = [
 
 
 ```js
+//mapping income category by boro code
 const incomeByBoro = new Map(results.map(d => [d.boro_cd, d.income_category]));
-  // 1) derive policy keys from the survey columns
+
 const policyKeys = Object.keys(survey[0]).filter(k => k.endsWith("_alignment"));
 
 const policyAvg = policyKeys.map(k => ({
@@ -259,7 +269,6 @@ const policyAvg = policyKeys.map(k => ({
 }));
 ```
 ```js
-// 2) reshape to long
 const policyKeys = Object.keys(survey[0]).filter(k => k.endsWith("_alignment"));
 const policyLong = survey.flatMap(d =>
   policyKeys.map(k => ({
@@ -298,11 +307,3 @@ Plot.plot({
   ]
 })}</div>
 
-
-```js
-// Simple bar chart: total votes for candidate vs opponent
-const voteTotals = [
-  {name: "Candidate", votes: d3.sum(results, d => d.votes_candidate)},
-  {name: "Opponent", votes: d3.sum(results, d => d.votes_opponent)}
-];
-```
