@@ -313,7 +313,7 @@ Plot.plot({
     Plot.ruleY([0])
   ]
 })}</div>
-<div class="card grid-colspan-1" style="max-height:550px;overflow:auto"><h2>Open Responses of Constituents</h2>
+<div class="card grid-colspan-1" style="max-height:550px;overflow:auto"><h2>Open Responses from Constituents on Policy</h2>
   ${survey
     .filter(d => d.open_response)
     .slice(0,50)
