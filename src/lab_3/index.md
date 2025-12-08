@@ -1,7 +1,7 @@
 ---
 title: "Lab 3: Mayoral Mystery"
 toc: false
-theme: [coffee, alt, wide]
+theme: [coffee, alt]
 style: custom-style.css
 
 ---
@@ -269,10 +269,10 @@ const policyLong = survey.flatMap(d =>
     income_category: incomeByBoro.get(d.boro_cd)
   }))
 ).filter(d => d.alignment != null && d.voted_for != null);
-
 ```
 
-```js
+
+<div class="card">${
 Plot.plot({
   fx: {label: "Policy", tickRotate: -4},        // one column per policy
   y: {label: "Average alignment", grid: true},
@@ -296,8 +296,8 @@ Plot.plot({
     ),
     Plot.ruleY([0])
   ]
-})
-```
+})}</div>
+
 
 ```js
 // Simple bar chart: total votes for candidate vs opponent
