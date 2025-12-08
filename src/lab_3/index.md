@@ -1,7 +1,7 @@
 ---
 title: "Lab 3: Mayoral Mystery"
 toc: false
-theme: [coffee, alt]
+theme: [wide]
 style: custom-style.css
 
 ---
@@ -257,19 +257,9 @@ Before we begin to discuss areas in which the candidate and their team succeeded
 //removing nulls
 const cleanSurvey = survey.filter(d => d.age != null && d.voted_for != null)
 ```
+
 ```js
 const colors = ["#e285fb",  "#B2D732", "#8457cc", "#c13a6b"];
-```
-
-
-```js
-const policies = [
-  { key: 'affordable_housing_alignment', label: 'Affordable Housing' },
-  { key: 'public_transit_alignment', label: 'Public Transit' },
-  { key: 'childcare_support_alignment', label: 'Childcare Support' },
-  { key: 'small_business_tax_alignment', label: 'Small Business Tax' },
-  { key: 'police_reform_alignment', label: 'Police Reform' }
-];
 ```
 
 
@@ -297,7 +287,8 @@ const policyList = survey.flatMap(d =>
 ```
 
 
-<div class="card">${
+<div class="grid grid-cols-2">
+<div class="card grid-rowspan-1"><h2>Average Policy Alignment by Income Level</h2>${
 Plot.plot({
   fx: {label: "Policy", tickRotate: -4},   
   y: {label: "Average alignment", grid: true},
@@ -322,4 +313,59 @@ Plot.plot({
     Plot.ruleY([0])
   ]
 })}</div>
+<div class="card grid-colspan-1" style="max-height:550px;overflow:auto"><h2>Open Responses of Constituents</h2>
+  ${survey
+    .filter(d => d.open_response)
+    .slice(0,50)
+    .map(d => html`<p><strong>Age ${d.age}, ${d.voted_for}:</strong> ${d.open_response}</p>`)}</div>
+</div>
 
+```js
+Plot.plot({
+  fx: {label: "Policy", tickRotate: -4},   
+  y: {label: "Average alignment", grid: true},
+  color: {type: "ordinal",
+    range: colors,
+    legend: true,},
+  marks: [
+    Plot.barY(
+      policyList,
+      Plot.groupX(
+        {y: "mean"},
+        {
+          fx: "policy",     
+          x: "voted_for",        
+          y: "alignment",
+          fy: "income_category",
+          fill: "income_category",
+          tip: true
+        }
+      )
+    ),
+    Plot.ruleY([0])
+  ]
+})
+```
+```js
+Plot.plot({
+
+  marks: [
+    Plot.rectY(survey, Plot.binX({y: "count"}, {x: "age", fill: "voted", tip: true})),
+    Plot.dot(survey, {
+      x: "age",
+      y: d => d.median_household_income,
+      r: 2,
+      // fill: "transparent",
+      // stroke: "transparent",
+      title: d => (d.open_response ? d.open_response.slice(0,200) : ""),
+      tip: true
+    })
+  ]
+})
+```
+<div style="max-height:200px;overflow:auto">
+  ${survey
+    .filter(d => d.open_response)
+    .slice(0,50) // limit shown
+    .map(d => html`<p><strong>Age ${d.age}, ${d.voted_for}:</strong> ${d.open_response}</p>`)}
+</div>
