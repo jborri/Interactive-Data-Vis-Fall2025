@@ -285,13 +285,23 @@ const policyList = survey.flatMap(d =>
   }))
 ).filter(d => d.alignment != null && d.voted_for != null);
 ```
-
+```js
+const policies = [
+  { key: 'affordable_housing_alignment', label: 'Affordable Housing' },
+  { key: 'public_transit_alignment', label: 'Public Transit' },
+  { key: 'childcare_support_alignment', label: 'Childcare Support' },
+  { key: 'small_business_tax_alignment', label: 'Small Business Tax' },
+  { key: 'police_reform_alignment', label: 'Police Reform' }
+];
+```
 
 <div class="grid grid-cols-2">
 <div class="card grid-rowspan-1"><h2>Average Policy Alignment by Income Level</h2>${
 Plot.plot({
-  fx: {label: "Policy", tickRotate: -4},   
+  fx: {label: "Policies"},   
   y: {label: "Average alignment", grid: true},
+  x: {label: "Voted For"},
+  fy: {label: "Income Category"},
   color: {type: "ordinal",
     range: colors,
     legend: true,},
@@ -301,18 +311,15 @@ Plot.plot({
       Plot.groupX(
         {y: "mean"},
         {
-          fx: "policy",     
+          fx: d => policyLabels[d.policy] || d.policy,     
           x: "voted_for",        
           y: "alignment",
           fy: "income_category",
           fill: "income_category",
-          tip: true
+          tip: true,
         }
       )
-    ),
-    Plot.ruleY([0])
-  ]
-})}</div>
+    ),Plot.ruleY([0])]})}</div>
 <div class="card grid-colspan-1" style="max-height:550px;overflow:auto"><h2>Open Responses from Constituents on Policy</h2>
   ${survey
     .filter(d => d.open_response)
@@ -320,28 +327,20 @@ Plot.plot({
     .map(d => html`<p><strong>Age ${d.age}, ${d.voted_for}:</strong> ${d.open_response}</p>`)}</div>
 </div>
 
-
-```js
-const turnoutByIncome = Array.from(
-  d3.group(policyList, d => d.income_category),
-  ([income_category, group]) => {
-    const total = group.length;
-    const candidateVotes = group.filter(d => d.voted_for === "Candidate").length;
-    return {
-      income_category,
-      turnout_pct: total > 0 ? (candidateVotes / total) * 100 : 0
-    };
-  }
-);
-```
-
-
-
-
-
 # For the Next Campaign
 ## Finally, based on the data presented above, here are some recommendations for the next campaign:
 - Focus on engaging middle-aged voters, as they showed lower support for the candidate.
 - Leverage the strong support from low-income communities by organizing more events in these areas.
 - Analyze open-ended feedback to identify specific issues that resonated with voters and incorporate these into future campaign strategies.
 - Consider targeted outreach efforts in districts with lower voter turnout to boost engagement.
+
+```js
+
+const policyLabels = {
+  affordable_housing_alignment: 'Affordable Housing',
+  public_transit_alignment: 'Public Transit',
+  childcare_support_alignment: 'Childcare Support',
+  small_business_tax_alignment: 'Small Business Tax',
+  police_reform_alignment: 'Police Reform'
+};
+```
