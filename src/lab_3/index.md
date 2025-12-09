@@ -130,7 +130,7 @@ Before we begin to discuss areas in which the candidate and their team succeeded
     }),
     Plot.dot(districtsJoined, Plot.geoCentroid({
       r: d => d.properties.median_household_income/10000,
-      fill: d => incomeColors[d.properties.income_category] ?? "#666",
+      fill: d => incomeColors[d.properties.income_category],
             title: (d) =>
         `Votes: ${d.properties.votes_candidate} \nMedian Income: ${d.properties.median_household_income} \nIncome Category: ${d.properties.income_category} `,
         tip: true,
@@ -233,7 +233,7 @@ Plot.plot({
       Plot.groupX(
         {y: "mean"},
         {
-          fx: d => policyLabels[d.policy] || d.policy,     
+          fx: d => policyLabels[d.policy] ?? d.policy,     
           x: "voted_for",        
           y: "alignment",
           fy: "income_category",
