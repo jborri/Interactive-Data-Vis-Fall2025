@@ -231,14 +231,13 @@ Before we begin to discuss areas in which the candidate and their team succeeded
   },
   y: {
     transform: (d) => d,
-    // label: "↑ Market value (US dollars, billions)",
     grid: 5
   },
     color: {
     type: "ordinal",
     range: colors,
     legend: true,
-    label: "Votes for Candidate (in thousands)"
+    label: "Voted for Candidate"
   },
   tip: true,
   marks: [
