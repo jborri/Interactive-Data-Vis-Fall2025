@@ -253,10 +253,7 @@ Before we begin to discuss areas in which the candidate and their team succeeded
 # Policy
 ## Next, let us take a look at how policy played a roll in the mayoral race
 
-```js
-//removing nulls
-const cleanSurvey = survey.filter(d => d.age != null && d.voted_for != null)
-```
+
 
 ```js
 const colors = ["#e285fb",  "#B2D732", "#8457cc", "#c13a6b"];
@@ -265,7 +262,7 @@ const colors = ["#e285fb",  "#B2D732", "#8457cc", "#c13a6b"];
 
 ```js
 //mapping income category by borough code
-const incomeByBoro = new Map(results.map(d => [d.boro_cd, d.income_category]));
+const incomeByBorough = new Map(results.map(d => [d.boro_cd, d.income_category]));
 
 const policyKeys = Object.keys(survey[0]).filter(k => k.endsWith("_alignment"));
 
@@ -280,7 +277,7 @@ const policyList = survey.flatMap(d =>
     policy: k,
     alignment: d[k],
     voted_for: d.voted_for,
-    income_category: incomeByBoro.get?.(d.boro_cd) ?? "unknown"
+    income_category: incomeByBorough.get?.(d.boro_cd) ?? "unknown"
   }))
 ).filter(d => d.alignment != null && d.voted_for != null);
 ```
