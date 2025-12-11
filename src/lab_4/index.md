@@ -336,24 +336,23 @@ Plot.plot({
     ]
 })}</div>
 <div class="card">${Plot.plot({
-    title: "Oxygen",
+    title: "pH",
     marks: [
         Plot.rectY([1], {
-            y1: 4.5,
-            y2: 9.5,
+            y1: 6.5,
+            y2: 7.6,
             fill: "green",
             fillOpacity: 0.2
         }),
-        Plot.ruleY([9.5], {
+        Plot.ruleY([7.6], {
             stroke: "red"
         }),
-        Plot.ruleY([4.5], {
+        Plot.ruleY([6.5], {
             stroke: "red"
         }),
-        Plot.ruleY([0]),
         Plot.line(waterByDate, {
             x: d => d.date,
-            y: d => d.oxygen,
+            y: d => d.ph,
             fy: d => d.station,
             stroke: "black"
         }),
@@ -361,7 +360,7 @@ Plot.plot({
 })}</div>
 </div>
 
-<div style="text-align: center; padding: 20px 200px; font-size: 20px; font-weight: 400;font-style:italic">Nitrogen and Phosphorus spike a few times during the year, but when you look at the weight and length graphs trout, the most sensitive of the species found in Clearwater Lake, are doing fine. The real concern is the spikes in heavy metals in the West, which go way beyond the what is permitted. The western shore is 2/2 right now... Let's see how the trout population is doing in terms of count:</div>
+<div style="text-align: center; padding: 20px 200px; font-size: 20px; font-weight: 400;font-style:italic">Nitrogen and Phosphorus spike a few times during the year, but when you look at the weight and length graphs trout, the most sensitive of the species found in Clearwater Lake, are doing fine. Although it is interesting to see that the pH does not reflect this increased nitrogen. I would have thought that there would be an increase in acidity (or a lower pH) due to nitrification. But this phenomenon pales in comparision to rhe real concern: the spikes in heavy metals in the West, which go way beyond the what is permitted. The wild west is 2/2 right now... Let's see how the trout population is doing in terms of count:</div>
 
 
 
