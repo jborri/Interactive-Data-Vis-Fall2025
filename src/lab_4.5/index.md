@@ -43,6 +43,54 @@ Inputs.table(cognition)
 ```js
 display(cognition)
 ```
+<style type="text/css">
+            .bar {
+                fill: steelblue;
+            }
+            .bar:hover {
+                fill: skyblue;
+            }
+            .axis-x text {
+                font-size: 12px;
+            }
+            .axis-y text {
+                font-size: 12px;
+            }
+
+            #button1990s {
+            background-color: blueviolet;
+        }
+        
+            #button2000s {
+            background-color: green;
+        }
+        
+            #button2010s {
+            background-color: blue;
+        }
+        
+            #button2020s {
+            background-color: goldenrod;
+        }
+        
+            #button1990s:hover {
+            background-color: mediumpurple;
+        }
+        
+            #button2000s:hover {
+            background-color: mediumseagreen;
+        }
+        
+            #button2010s:hover {
+            background-color: lightskyblue;
+        }
+        
+            #button2020s:hover {
+            background-color: yellow;
+            
+        }
+        
+</style>
 
 <h1>Final Project: Analysis of Best Sellers List</h1>
         <button id="button1990s">1990s</button>
