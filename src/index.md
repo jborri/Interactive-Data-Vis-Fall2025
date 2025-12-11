@@ -7,3 +7,6 @@ Labs:
 - [Lab 0: Getting Started](/lab_0/readme)
 - [Lab 1: Passing Pollinators](/lab_1/readme)
 - [Lab 2: Subway Staffing](/lab_2/readme)
+- [Lab 3: Mayoral Mystery](/lab_3/readme)
+- [Lab 4: Clearwater Crisis](/lab_4/readme)
+- [Lab 4.5: Exploring](/lab_4.5/readme)

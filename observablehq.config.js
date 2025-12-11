@@ -46,6 +46,14 @@ export default {
         { name: "Instructions", path: "/lab_4/readme" },
         { name: "Dashboard", path: "/lab_4/index" },
       ],
+    },
+        {
+      name: "Lab 4.5: Exploring",
+      open: true,
+      pages: [
+        { name: "Instructions", path: "/lab_4.5/readme" },
+        { name: "Dashboard", path: "/lab_4.5/index" },
+      ],
     }
 
   ],
