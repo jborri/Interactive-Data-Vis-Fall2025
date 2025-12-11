@@ -17,7 +17,15 @@ display(fishes)
 ```
 
 ```js
-//fixing date
+Inputs.table(water)
+```
+```js
+display(water)
+```
+
+
+```js
+//fixing date for fish
 const fishesByDate = fishes
   .sort((a, b) => new Date(a.date) - new Date(b.date))
   .map(d => ({
@@ -171,9 +179,193 @@ Plot.plot({
 })}</div>
 </div>
 
-<div style="text-align: center; padding: 20px 200px; font-size: 20px; font-weight: 400;font-style:italic">Length and weight (both indicators of health) seem fairly consistent. <br>A few blips(possibly natural variation) but nothing difinitive aside from what seems to be a decrease in both weight and length for the western population. <br><br>Let's put a pin in this for now and take a look at count next:</div>
+<div style="text-align: center; padding: 20px 200px; font-size: 20px; font-weight: 400;font-style:italic">Length and weight (both indicators of health) seem fairly consistent. <br>A few blips(possibly natural variation) but nothing difinitive aside from what seems to be a decrease in both weight and length for the western population. <br><br>Let's put a pin in this for now and take a look at the water quality!</div>
+
+```js
+//fixing date for water
+const waterByDate = water
+  .sort((a, b) => new Date(a.date) - new Date(b.date))
+  .map(d => ({
+    date: new Date(d.date),
+    nitrogen: d.nitrogen_mg_per_L,
+    phosphorus: d.phosphorus_mg_per_L,
+    heavymetal: d.heavy_metals_ppb,
+    turbidity: d.turbidity_ntu,
+    ph: d.ph,
+    temp: d.temperature_celsius,
+    station: d.station_id,
+    oxygen: d.dissolved_oxygen_mg_per_L,
+  }));
+```
+<!-- ```js
+//nitrogen plot
+Plot.plot({
+    title: "Nitrogen",
+    marks: [
+        Plot.ruleY([2.0],{
+            stroke:"red"
+        }),
+                Plot.ruleY([1.5],{
+            stroke:"orange"
+        }),
+        Plot.line(waterByDate, {
+            x: d => d.date,
+            y: d => d.nitrogen,
+            fy: d => d.station,
+            stroke: "black"
+        }),
+    ]
+})
+```
+```js
+//phos plot
+Plot.plot({
+    title: "Phosphorus",
+    marks: [
+        Plot.ruleY([0.1],{
+            stroke:"red"
+        }),
+                Plot.ruleY([0.05],{
+            stroke:"orange"
+        }),
+        Plot.line(waterByDate, {
+            x: d => d.date,
+            y: d => d.phosphorus,
+            fy: d => d.station,
+            stroke: "black"
+        }),
+    ]
+})
+```
+```js
+//heavy metal plot
+Plot.plot({
+    title: "Heavy Metals",
+    marks: [
+        Plot.ruleY([30],{
+            stroke:"red"
+        }),
+                Plot.ruleY([20],{
+            stroke:"orange"
+        }),
+        Plot.line(waterByDate, {
+            x: d => d.date,
+            y: d => d.heavymetal,
+            fy: d => d.station,
+            stroke: "black"
+        }),
+    ]
+})
+```
+```js
+//o2 plot
+Plot.plot({
+    title: "Oxygen",
+    marks: [
+        Plot.rectY([1], {
+            y1: 4.5,
+            y2: 9.5,
+            fill: "green",
+            fillOpacity: 0.2
+        }),
+        Plot.ruleY([9.5], {
+            stroke: "red"
+        }),
+        Plot.ruleY([4.5], {
+            stroke: "red"
+        }),
+        Plot.ruleY([0]),
+        Plot.line(waterByDate, {
+            x: d => d.date,
+            y: d => d.oxygen,
+            fy: d => d.station,
+            stroke: "black"
+        }),
+    ]
+})
+``` -->
+<div class="grid grid-cols-2">
+<div class="card grid-rowspan-1"><h2>Change in Nitrogen Throughout the Year</h2>${Plot.plot({
+    marks: [
+        Plot.ruleY([2.0],{
+            stroke:"red"
+        }),
+                Plot.ruleY([1.5],{
+            stroke:"orange"
+        }),
+        Plot.line(waterByDate, {
+            x: d => d.date,
+            y: d => d.nitrogen,
+            fy: d => d.station,
+            stroke: "black"
+        }),
+    ]
+})}</div>
+<div class="card">${Plot.plot({
+    title: "Phosphorus",
+    marks: [
+        Plot.ruleY([0.1],{
+            stroke:"red"
+        }),
+                Plot.ruleY([0.05],{
+            stroke:"orange"
+        }),
+        Plot.line(waterByDate, {
+            x: d => d.date,
+            y: d => d.phosphorus,
+            fy: d => d.station,
+            stroke: "black"
+        }),
+    ]
+})}</div>
+<div class="card">${Plot.plot({
+    title: "Heavy Metals",
+    marks: [
+        Plot.ruleY([30],{
+            stroke:"red"
+        }),
+                Plot.ruleY([20],{
+            stroke:"orange"
+        }),
+        Plot.line(waterByDate, {
+            x: d => d.date,
+            y: d => d.heavymetal,
+            fy: d => d.station,
+            stroke: "black"
+        }),
+    ]
+})}</div>
+<div class="card">${Plot.plot({
+    title: "Oxygen",
+    marks: [
+        Plot.rectY([1], {
+            y1: 4.5,
+            y2: 9.5,
+            fill: "green",
+            fillOpacity: 0.2
+        }),
+        Plot.ruleY([9.5], {
+            stroke: "red"
+        }),
+        Plot.ruleY([4.5], {
+            stroke: "red"
+        }),
+        Plot.ruleY([0]),
+        Plot.line(waterByDate, {
+            x: d => d.date,
+            y: d => d.oxygen,
+            fy: d => d.station,
+            stroke: "black"
+        }),
+    ]
+})}</div>
+</div>
+
+
+
 
 <!-- ```js
+// COUNT
 Plot.plot({
     color: {legend: true},
     marks: [
@@ -188,7 +380,7 @@ Plot.plot({
         })
     ]
 })
-``` -->
+```
 <div class="grid grid-cols-2">
 <div class="card">${Plot.plot({
     marks: [
@@ -202,4 +394,4 @@ Plot.plot({
     ]
 })}</div>
 <div style="text-align: center;padding: 200px 0 0 0; font-size: 20px; font-weight: 400;font-style:italic">Well it seems trout populations remain fairly consistent in every region of the lake aside from the west and south sides.... But maybe it has something to do with water quality... I mean surely no one is dumping excess amounts of pollutants into the lake.</div>
-</div>
+</div> -->
