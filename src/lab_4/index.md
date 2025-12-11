@@ -361,13 +361,14 @@ Plot.plot({
 })}</div>
 </div>
 
+<div style="text-align: center; padding: 20px 200px; font-size: 20px; font-weight: 400;font-style:italic">Nitrogen and Phosphorus spike a few times during the year, but when you look at the weight and length graphs trout, the most sensitive of the species found in Clearwater Lake, are doing fine. The real concern is the spikes in heavy metals in the West, which go way beyond the what is permitted. The western shore is 2/2 right now... Let's see how the trout population is doing in terms of count:</div>
 
 
 
 <!-- ```js
 // COUNT
 Plot.plot({
-    color: {legend: true},
+    // color: {legend: true},
     marks: [
         Plot.frame(),
         Plot.line(troutCount, {
@@ -380,7 +381,7 @@ Plot.plot({
         })
     ]
 })
-```
+``` -->
 <div class="grid grid-cols-2">
 <div class="card">${Plot.plot({
     marks: [
@@ -393,5 +394,5 @@ Plot.plot({
         })
     ]
 })}</div>
-<div style="text-align: center;padding: 200px 0 0 0; font-size: 20px; font-weight: 400;font-style:italic">Well it seems trout populations remain fairly consistent in every region of the lake aside from the west and south sides.... But maybe it has something to do with water quality... I mean surely no one is dumping excess amounts of pollutants into the lake.</div>
-</div> -->
+<div style="text-align: center;padding: 200px 0 0 0; font-size: 20px; font-weight: 400;font-style:italic">Well it seems trout populations remain fairly consistent in every region of the lake aside from the west and south sides.... Something is going on over there... Next we take a look at the suspects!</div>
+</div>
