@@ -1,12 +1,16 @@
 ---
 title: "Lab 4: Clearwater Crisis"
 toc: false
+theme: [alt]
+style: custom-style.css
 ---
 
 <!-- Import Data -->
 ```js
 const fishes = await FileAttachment("data/fish_surveys.csv").csv({ typed: true });
 const water = await FileAttachment("data/water_quality.csv").csv({ typed: true });
+const suspect = await FileAttachment("data/suspect_activities.csv").csv({ typed: true });
+const station = await FileAttachment("data/monitoring_stations.csv").csv({ typed: true });
 ```
 
 ```js
@@ -21,6 +25,20 @@ Inputs.table(water)
 ```
 ```js
 display(water)
+```
+
+```js
+Inputs.table(suspect)
+```
+```js
+display(suspect)
+```
+
+```js
+Inputs.table(station)
+```
+```js
+display(station)
 ```
 
 
@@ -71,6 +89,7 @@ const troutCount = fishesByDate
         ...d,
         count: d.count
     }));
+
 ```
 
 <div style="text-align: center; padding: 0 200px; font-size: 36px; font-weight: 700;">Establishing a Starting Point</div>
@@ -393,5 +412,133 @@ Plot.plot({
         })
     ]
 })}</div>
-<div style="text-align: center;padding: 200px 0 0 0; font-size: 20px; font-weight: 400;font-style:italic">Well it seems trout populations remain fairly consistent in every region of the lake aside from the west and south sides.... Something is going on over there... Next we take a look at the suspects!</div>
+<div style="text-align: center;padding: 200px 0 0 0; font-size: 20px; font-weight: 400;font-style:italic">Well it seems trout populations remain fairly consistent in every region of the lake aside from the west and south sides.... Something is going on over there in the west, for sure... Next we take a look at the suspects!</div>
 </div>
+
+```js
+//fixing date for fish
+const suspectByDate = suspect
+  .sort((a, b) => new Date(a.date) - new Date(b.date))
+  .map(d => ({
+    date: new Date(d.date),
+    activity: d.activity_type,
+    intensity: d.intensity,
+    duration: d.duration_days,
+  }));
+  ```
+
+
+
+```js
+Plot.plot({
+    color:{legend: true},
+    margin: 100,
+  x: {
+    tickRotate: -30,
+  },
+  y: {
+    grid: true 
+  },
+  marks: [
+    Plot.rectY(suspect, 
+      Plot.groupX(
+        {y: "count"}, 
+        {x: "activity_type", 
+         fill: "suspect",
+         tip: true,
+        }
+      ))
+      
+  ]
+  
+})
+```
+```js
+const activityCount = suspectByDate
+    .filter(d => d.activity === "Maintenance Shutdown" )
+    .map(d => ({
+        ...d,
+        suspect: d.suspect
+    }));
+    console.log("Just u:", activityCount.length);
+```
+
+```js
+// west trout population
+const westTrout = fishesByDate.filter(d => d.station === "West" && d.species === "Trout");
+console.log("Just Trout:", westTrout.length);
+```
+
+West trout population
+```js
+Plot.plot({
+    marks: [
+        Plot.frame(),
+        Plot.line(westTrout, {
+            x: "date",
+            y: "count",
+            tip: true
+        }),
+         Plot.ruleX(activityCount, {
+            stroke: "red"
+        }),
+
+    ]
+})
+```
+
+
+```js
+const activityWithEndDate = activityCount.map(d => ({
+    ...d,
+    date: d.date,
+    endDate: new Date(d.date.getTime() + (d.duration || 0) * 24 * 60 * 60 * 1000),
+    duration: d.duration
+}));
+console.log("activityWithEndDate:", activityWithEndDate);
+```
+
+<!-- ```js
+display(activityWithEndDate)
+``` -->
+
+```js
+// west heavy metals population
+const westMetal = water.filter(d => d.station_id === "West");
+console.log("Just metal:", westMetal.length);
+```
+
+
+
+```js
+Plot.plot({
+    title: "Duration of Maintenance Shutdowns",
+    subtitle: "plotted against heavy metal counts",
+    x:{
+        type: "time",
+    },
+    marks: [
+        Plot.frame(),
+        Plot.line(westTrout, {
+            x: "date",
+            y: "count",
+            tip: true
+        }),
+        Plot.rectX(activityWithEndDate, {
+            x1: "date",
+            x2: "endDate",
+            fill: "green",
+            fillOpacity: 0.2,
+            tip: true,
+            title: (d) => `Duration: ${d.duration} days`,
+        tip: true,
+}),
+        Plot.line(westMetal, {
+            x: "date",
+            y: "heavy_metals_ppb",
+            tip: true
+        }),
+
+    ]
+})
+```

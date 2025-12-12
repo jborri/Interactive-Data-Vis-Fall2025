@@ -1,0 +1,9 @@
+@import url("observablehq:default.css");
+@import url("observablehq:theme-air.css");
+
+:root {
+    --theme-foreground: rgb(32, 4, 51);
+    --theme-background: #c6e7d3;
+    --theme-background-alt: #e3f4ea;
+
+}
