@@ -89,7 +89,10 @@ const troutCount = fishesByDate
         ...d,
         count: d.count
     }));
+```
 
+```js
+const colors = ["#95eeadff",  "#46be66ff", "#177b32ff", "#07260fff"];
 ```
 
 <div style="text-align: center; padding: 0 200px; font-size: 36px; font-weight: 700;">Establishing a Starting Point</div>
@@ -482,7 +485,9 @@ Plot.plot({
 
 <div class="grid grid-cols-2">
 <div class="card grid-rowspan-1"><h2>Documented Activity of the Suspects</h2>${Plot.plot({
-    color:{legend: true},
+    color: {type: "ordinal",
+    range: colors,
+    legend: true,},
     margin: 100,
   x: {
     tickRotate: -30,
@@ -679,7 +684,8 @@ Plot.plot({
         Plot.frame(),
         Plot.barY(station, {
             x: "station_name",
-            y: "distance_to_chemtech_m"
+            y: "distance_to_chemtech_m",
+            fill: colors,
         })
     ]
 })}</div>
