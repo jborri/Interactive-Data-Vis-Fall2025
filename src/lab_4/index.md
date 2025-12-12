@@ -415,6 +415,60 @@ Plot.plot({
 <div style="text-align: center;padding: 200px 0 0 0; font-size: 20px; font-weight: 400;font-style:italic">Well it seems trout populations remain fairly consistent in every region of the lake aside from the west and south sides.... Something is going on over there in the west, for sure... Next we take a look at the suspects!</div>
 </div>
 
+<div class="grid grid-cols-2">
+<div class="card grid-rowspan-1"><h2>Documented Activity of the Suspects</h2>${Plot.plot({
+    color:{legend: true},
+    margin: 100,
+  x: {
+    tickRotate: -30,
+  },
+  y: {
+    grid: true 
+  },
+  marks: [
+    Plot.rectY(suspect, 
+      Plot.groupX(
+        {y: "count"}, 
+        {x: "activity_type", 
+         fill: "suspect",
+         tip: true,
+        }
+      ))     
+  ]  
+})}</div>
+<div class="card">${Plot.plot({
+    title: "Duration of Maintenance Shutdowns",
+    subtitle: "plotted against heavy metal counts",
+    x:{
+        type: "time",
+    },
+    marks: [
+        Plot.frame(),
+        Plot.line(westTrout, {
+            x: "date",
+            y: "count",
+            tip: true
+        }),
+        Plot.rectX(activityWithEndDate, {
+            x1: "date",
+            x2: "endDate",
+            fill: "red",
+            fillOpacity: 0.2,
+            tip: true,
+            title: (d) => `Duration: ${d.duration} days`,
+        tip: true,
+}),
+        Plot.line(westMetal, {
+            x: "date",
+            y: "heavy_metals_ppb",
+            tip: true
+        }),
+    ]
+})}</div>
+</div>
+
+<div style="text-align: center;padding: 0 0 0 0; font-size: 20px; font-weight: 400;font-style:italic">Well it looks like ChemTech Manufacturing's maintenance shutdowns are somehow related to the heavy metal counts in the west... but how close is ChemTech Manufacturing to the western portion of the lake?</div>
+
 ```js
 //fixing date for fish
 const suspectByDate = suspect
@@ -429,7 +483,8 @@ const suspectByDate = suspect
 
 
 
-```js
+<!-- ```js
+//activity
 Plot.plot({
     color:{legend: true},
     margin: 100,
@@ -452,7 +507,7 @@ Plot.plot({
   ]
   
 })
-```
+``` -->
 ```js
 const activityCount = suspectByDate
     .filter(d => d.activity === "Maintenance Shutdown" )
@@ -462,31 +517,6 @@ const activityCount = suspectByDate
     }));
     console.log("Just u:", activityCount.length);
 ```
-
-```js
-// west trout population
-const westTrout = fishesByDate.filter(d => d.station === "West" && d.species === "Trout");
-console.log("Just Trout:", westTrout.length);
-```
-
-West trout population
-```js
-Plot.plot({
-    marks: [
-        Plot.frame(),
-        Plot.line(westTrout, {
-            x: "date",
-            y: "count",
-            tip: true
-        }),
-         Plot.ruleX(activityCount, {
-            stroke: "red"
-        }),
-
-    ]
-})
-```
-
 
 ```js
 const activityWithEndDate = activityCount.map(d => ({
@@ -503,6 +533,30 @@ display(activityWithEndDate)
 ``` -->
 
 ```js
+// west trout population
+const westTrout = fishesByDate.filter(d => d.station === "West" && d.species === "Trout");
+console.log("Just Trout:", westTrout.length);
+```
+
+<!-- West trout population
+```js
+Plot.plot({
+    marks: [
+        Plot.frame(),
+        Plot.line(westTrout, {
+            x: "date",
+            y: "count",
+            tip: true
+        }),
+         Plot.ruleX(activityCount, {
+            stroke: "red"
+        }),
+
+    ]
+})
+``` -->
+
+```js
 // west heavy metals population
 const westMetal = water.filter(d => d.station_id === "West");
 console.log("Just metal:", westMetal.length);
@@ -510,7 +564,7 @@ console.log("Just metal:", westMetal.length);
 
 
 
-```js
+<!-- ```js
 Plot.plot({
     title: "Duration of Maintenance Shutdowns",
     subtitle: "plotted against heavy metal counts",
@@ -527,7 +581,7 @@ Plot.plot({
         Plot.rectX(activityWithEndDate, {
             x1: "date",
             x2: "endDate",
-            fill: "green",
+            fill: "red",
             fillOpacity: 0.2,
             tip: true,
             title: (d) => `Duration: ${d.duration} days`,
@@ -541,4 +595,28 @@ Plot.plot({
 
     ]
 })
-```
+``` -->
+<!-- ```js
+//distrance plot
+Plot.plot({
+    marks: [
+        Plot.frame(),
+        Plot.barY(station, {
+            x: "station_name",
+            y: "distance_to_chemtech_m"
+        })
+    ]
+})
+``` -->
+<div class="grid grid-cols-2">
+<div class="card grid-rowspan-1"><h2>ChemTech's distance to each shore</h2>${Plot.plot({
+    marks: [
+        Plot.frame(),
+        Plot.barY(station, {
+            x: "station_name",
+            y: "distance_to_chemtech_m"
+        })
+    ]
+})}</div>
+<div style="text-align: center;padding: 100px 0 0 0; font-size: 20px; font-weight: 400;font-style:italic">Well... if ChemTech Manufacturing, located closest to the western shore, is documented to have maintenance shutdowns, which correspond to the increase in heavy metals...in the western portion of the lake... which also has a declining trout population, a species especially sensitive to pollution... I don't think it's a strech to say that ChemTech Manufacturing is responsible for the declining trout population in the west portion of Cleatwater Lake.</div>
+</div>
