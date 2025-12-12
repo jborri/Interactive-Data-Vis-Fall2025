@@ -259,21 +259,34 @@ Plot.plot({
 ```js
 //heavy metal plot
 Plot.plot({
-    title: "Heavy Metals",
-    marks: [
-        Plot.ruleY([30],{
-            stroke:"red"
-        }),
-                Plot.ruleY([20],{
-            stroke:"orange"
-        }),
-        Plot.line(waterByDate, {
-            x: d => d.date,
-            y: d => d.heavymetal,
-            fy: d => d.station,
-            stroke: "black"
-        }),
-    ]
+  title: "Heavy Metals",
+  marks: [
+    Plot.ruleY([30], { stroke: "red" }),
+    Plot.ruleY([20], { stroke: "orange" }),
+    Plot.line(waterByDate, {
+      x: d => d.date,
+      y: d => d.heavymetal,
+      fy: d => d.station,
+      stroke: "black"
+    }),
+    Plot.areaY(waterByDate, {
+      x: d => d.date,
+      y1: 0,
+      y2: d => Math.min(d.heavymetal, 40), 
+      fy: d => d.station,
+      fill: "green",
+      fillOpacity: 0.3
+    }),
+    Plot.areaY(waterByDate, {
+      x: d => d.date,
+      y1: 20,
+      y2: d => Math.max(d.heavymetal, 20),
+      fy: d => d.station,
+      fill: "red",
+      fillOpacity: 0.3
+    }),
+
+  ]
 })
 ```
 ```js
@@ -318,6 +331,22 @@ Plot.plot({
             fy: d => d.station,
             stroke: "black"
         }),
+        Plot.areaY(waterByDate, {
+      x: d => d.date,
+      y1: 0,
+      y2: d => Math.min(d.nitrogen, 2.0), 
+      fy: d => d.station,
+      fill: "green",
+      fillOpacity: 0.3
+    }),
+        Plot.areaY(waterByDate, {
+      x: d => d.date,
+      y1: 1.5,
+      y2: d => Math.max(d.nitrogen, 1.5),
+      fy: d => d.station,
+      fill: "red",
+      fillOpacity: 0.3
+    }),
     ]
 })}</div>
 <div class="card">${Plot.plot({
@@ -335,39 +364,75 @@ Plot.plot({
             fy: d => d.station,
             stroke: "black"
         }),
+        Plot.areaY(waterByDate, {
+            x: d => d.date,
+            y1: 0,
+            y2: d => Math.min(d.phosphorus, 0.1), 
+            fy: d => d.station,
+            fill: "green",
+            fillOpacity: 0.3
+    }),
+    Plot.areaY(waterByDate, {
+        x: d => d.date,
+        y1: 0.05,
+        y2: d => Math.max(d.phosphorus, 0.05),
+        fy: d => d.station,
+        fill: "red",
+        fillOpacity: 0.3
+    }),
     ]
 })}</div>
 <div class="card">${Plot.plot({
-    title: "Heavy Metals",
-    marks: [
-        Plot.ruleY([30],{
-            stroke:"red"
-        }),
-                Plot.ruleY([20],{
-            stroke:"orange"
-        }),
+  title: "Heavy Metals",
+  marks: [
+    Plot.ruleY([30], { stroke: "red" }),
+    Plot.ruleY([20], { stroke: "orange" }),
         Plot.line(waterByDate, {
-            x: d => d.date,
-            y: d => d.heavymetal,
-            fy: d => d.station,
-            stroke: "black"
-        }),
-    ]
+      x: d => d.date,
+      y: d => d.heavymetal,
+      fy: d => d.station,
+      stroke: "black"
+    }),
+    Plot.areaY(waterByDate, {
+      x: d => d.date,
+      y1: 0,
+      y2: d => Math.min(d.heavymetal, 40), 
+      fy: d => d.station,
+      fill: "green",
+      fillOpacity: 0.3
+    }),
+    Plot.areaY(waterByDate, {
+      x: d => d.date,
+      y1: 20,
+      y2: d => Math.max(d.heavymetal, 20),
+      fy: d => d.station,
+      fill: "red",
+      fillOpacity: 0.3
+    }),
+  ]
 })}</div>
 <div class="card">${Plot.plot({
     title: "pH",
     marks: [
-        Plot.rectY([1], {
+        Plot.areaY(waterByDate, {
+            x: d => d.date,
             y1: 6.5,
-            y2: 7.6,
+            y2: d => Math.min(d.ph, 7.6), 
+            fy: d => d.station,
             fill: "green",
-            fillOpacity: 0.2
-        }),
+            fillOpacity: 0.3
+    }),
         Plot.ruleY([7.6], {
             stroke: "red"
         }),
         Plot.ruleY([6.5], {
             stroke: "red"
+        }),
+                Plot.ruleY([8.0], {
+            stroke: "none"
+        }),
+                       Plot.ruleY([6.0], {
+            stroke: "none"
         }),
         Plot.line(waterByDate, {
             x: d => d.date,
@@ -620,3 +685,4 @@ Plot.plot({
 })}</div>
 <div style="text-align: center;padding: 100px 0 0 0; font-size: 20px; font-weight: 400;font-style:italic">Well... if ChemTech Manufacturing, located closest to the western shore, is documented to have maintenance shutdowns, which correspond to the increase in heavy metals...in the western portion of the lake... which also has a declining trout population, a species especially sensitive to pollution... I don't think it's a strech to say that ChemTech Manufacturing is responsible for the declining trout population in the west portion of Cleatwater Lake.</div>
 </div>
+
