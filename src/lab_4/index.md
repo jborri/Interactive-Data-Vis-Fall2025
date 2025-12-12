@@ -522,7 +522,7 @@ const activityCount = suspectByDate
 const activityWithEndDate = activityCount.map(d => ({
     ...d,
     date: d.date,
-    endDate: new Date(d.date.getTime() + (d.duration || 0) * 24 * 60 * 60 * 1000),
+    endDate: new Date(d.date.getTime() + (d.duration) * 24 * 60 * 60 * 1000),
     duration: d.duration
 }));
 console.log("activityWithEndDate:", activityWithEndDate);
