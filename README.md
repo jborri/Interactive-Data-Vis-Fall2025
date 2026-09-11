@@ -78,7 +78,7 @@ npm run build
 
 ```text
 src/
-├── index.md            Portfolio landing page
+├── index.md            Project landing page
 ├── lab_1/              Pollinator exploration
 ├── lab_2/              Subway staffing analysis
 ├── lab_3/              Geospatial campaign analysis
