@@ -1,59 +1,89 @@
-# Interactive Data Visualization (Fall 2025)
+# Interactive Data Visualization
 
-This is an [Observable Framework](https://observablehq.com/framework/) app. To install the required dependencies, run:
+Interactive analytical stories built with Observable Framework, Observable Plot, JavaScript, and geospatial data.
 
-```
-npm install
-```
+[Open the deployed project](https://jborri.github.io/Interactive-Data-Vis-Fall2025/)
 
-Then, to start the local preview server, run:
+## Overview
 
-```
+This repository documents a semester of interactive visualization work completed in CUNY Graduate Center's Data Analysis and Visualization program. The projects move from exploratory charts to multi-dataset dashboards, geospatial analysis, annotations, and narrative explanation.
+
+The datasets and scenarios were supplied through course assignments unless a project page states otherwise. The analysis, visualization choices, interaction design, and written interpretations are my work.
+
+## Featured projects
+
+### Mayoral Mystery
+
+A geospatial campaign-analysis dashboard combining election results, survey responses, campaign events, and NYC district geometry. The project uses maps and linked comparisons to identify demographic and policy patterns and develop recommendations for a hypothetical future campaign.
+
+[View Mayoral Mystery](https://jborri.github.io/Interactive-Data-Vis-Fall2025/lab_3/)
+
+### Clearwater Crisis
+
+An investigative data story combining fish surveys, water-quality measurements, monitoring-station locations, and activity records. The analysis follows temporal and spatial evidence to evaluate competing explanations for a fictional ecological decline.
+
+[View Clearwater Crisis](https://jborri.github.io/Interactive-Data-Vis-Fall2025/lab_4/)
+
+### Subway Staffing
+
+A multi-table operations dashboard relating ridership, local events, incident response, current staffing, and a future event calendar to recommend stations for additional staffing.
+
+[View Subway Staffing](https://jborri.github.io/Interactive-Data-Vis-Fall2025/lab_2/)
+
+### Prolific Pollinators
+
+An exploratory dashboard examining pollinator morphology, weather conditions, visit frequency, and nectar production.
+
+[View Prolific Pollinators](https://jborri.github.io/Interactive-Data-Vis-Fall2025/lab_1/)
+
+## Methods and techniques
+
+- exploratory analysis across multiple CSV datasets;
+- interactive charts and tooltips with Observable Plot;
+- temporal and categorical comparison;
+- choropleth and proportional-symbol mapping;
+- GeoJSON and TopoJSON workflows;
+- annotations and explanatory narrative;
+- responsive dashboard composition; and
+- automated deployment through GitHub Actions and GitHub Pages.
+
+## Technology
+
+- Observable Framework
+- Observable Plot
+- JavaScript
+- Markdown and HTML
+- CSS
+- CSV, GeoJSON, and TopoJSON
+- GitHub Actions and GitHub Pages
+
+## Run locally
+
+```bash
+git clone https://github.com/jborri/Interactive-Data-Vis-Fall2025.git
+cd Interactive-Data-Vis-Fall2025
+npm ci
 npm run dev
 ```
 
-Then visit <http://localhost:3000> to preview your app.
+Then open the local address reported by Observable Framework.
 
-For more, see <https://observablehq.com/framework/getting-started>.
+To create a production build:
 
-## Project structure
-
-A typical Framework project looks like this:
-
-```ini
-.
-├─ src
-│  ├─ components
-│  │  └─ timeline.js           # an importable module
-│  ├─ data
-│  │  ├─ launches.csv.js       # a data loader
-│  │  └─ events.json           # a static data file
-│  ├─ example-dashboard.md     # a page
-│  ├─ example-report.md        # another page
-│  └─ index.md                 # the home page
-├─ .gitignore
-├─ observablehq.config.js      # the app config file
-├─ package.json
-└─ README.md
+```bash
+npm run build
 ```
 
-**`src`** - This is the “source root” — where your source files live. Pages go here. Each page is a Markdown file. Observable Framework uses [file-based routing](https://observablehq.com/framework/project-structure#routing), which means that the name of the file controls where the page is served. You can create as many pages as you like. Use folders to organize your pages.
+## Repository guide
 
-**`src/index.md`** - This is the home page for your app. You can have as many additional pages as you’d like, but you should always have a home page, too.
+```text
+src/
+├── index.md            Project landing page
+├── lab_1/              Pollinator exploration
+├── lab_2/              Subway staffing analysis
+├── lab_3/              Geospatial campaign analysis
+├── lab_4/              Environmental investigation
+└── lab_4.5/            Additional visualization experiments
+```
 
-**`src/data`** - You can put [data loaders](https://observablehq.com/framework/data-loaders) or static data files anywhere in your source root, but we recommend putting them here.
-
-**`src/components`** - You can put shared [JavaScript modules](https://observablehq.com/framework/imports) anywhere in your source root, but we recommend putting them here. This helps you pull code out of Markdown files and into JavaScript modules, making it easier to reuse code across pages, write tests and run linters, and even share code with vanilla web applications.
-
-**`observablehq.config.js`** - This is the [app configuration](https://observablehq.com/framework/config) file, such as the pages and sections in the sidebar navigation, and the app’s title.
-
-## Command reference
-
-| Command           | Description                                              |
-| ----------------- | -------------------------------------------------------- |
-| `npm install`            | Install or reinstall dependencies                        |
-| `npm run dev`        | Start local preview server                               |
-| `npm run build`      | Build your static site, generating `./dist`              |
-| `npm run deploy`     | Deploy your app to Observable                            |
-| `npm run clean`      | Clear the local data loader cache                        |
-| `npm run observable` | Run commands like `observable help`                      |
+Each project directory contains the dashboard, its local data files, and the original assignment brief for context.
