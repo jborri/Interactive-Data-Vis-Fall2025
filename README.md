@@ -36,7 +36,7 @@ An exploratory dashboard examining pollinator morphology, weather conditions, vi
 
 [View Prolific Pollinators](https://jborri.github.io/Interactive-Data-Vis-Fall2025/lab_1/)
 
-## Skills demonstrated
+## Methods and techniques
 
 - exploratory analysis across multiple CSV datasets;
 - interactive charts and tooltips with Observable Plot;
